@@ -1,0 +1,170 @@
+ls -la .git/refs/heads
+cat .refs/HEAD
+
+1.Initialise a git on the project  folder
+------>git init
+
+Commands----------------->
+
+1.git add --->to add a file into stagging area
+ways to add file into stagging area:
+--------------------------------------------
+git add filename (or)
+git add filename1,filename2,filename3,.... (or)
+git add . -->it add all files in the current directory folder.
+git add  -A -->
+ use when you are in child directory, wants to add  parent directory  files to stage area otherwise use git add . command to add files of child directory  into stagging area
+---Website
+        ----index.js
+        ----index.html
+        ----Style
+                -----style.css
+
+staged files ----->added file in stagging area.
+unstaged files ----->not yet to add files in stagging area
+
+2.git status-->to view a stagging area(stagging area holds a staged(added file) and unstaged(not yet to add files) files.
+
+3.git rm fileName --> deletes file from folder(like shift+del)
+  git rm  -r  --cached ---->it moves a staged file into unstage file in stagging area.
+  ways to move staged into unstaged file in stagging area:
+  --------------------------------------------
+  git rm  -r  --cached  filename (or)
+  git rm  -r  --cached filename1,filename2,filename3,.... (or)
+  git rm  -r  --cached . -->it move all stageded files into unstaged file in the current directory folder.
+
+4.git commit -m "here you to type  messages what you changed in that file".
+---->it saves a stagged file
+    git commit -amend  -m "message"
+---> used to append some changes in commited file and also messages(this is only for last commit)
+
+5.git log ----> it shows commit history files.
+   git log -n 2 --> it shows commit logs of mentioned number
+   git log  --author="Author name" ---> it shows that particular authors commits
+   git log  --since=2022-01-17 --> shows commit from that date
+   git log --until=
+   git log --graph --oneline --decorate --all
+
+6.git diff --->it shows what changes are made before and after in unstaged file.
+   git diff --staged  ---> --->it shows what changes are made before and after in staged file.
+
+7.git show  put-commit-id -->it shows the particular committed  files .
+
+8.***************      GIT  RESET        ***************************** 
+    case 1 :  
+         when you messed up with that file then wants to revoke previous version from repo(case happens in unstaged area)
+          git checkout  -- filename 
+    case 2 :
+           when you accidently staged a messed file(git add filename) wants to revoke previous version from repo then
+           i) git reset HEAD filename  --> this take file stage into unstage
+          ii) git checkout  -- filename 
+  case 3 :
+           revoke committed file
+           i) git checkout (sha-1 code)  -- filename
+           ii) git checkout filename
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                      BRANCH CREATION :
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Default branch --> main or master
+
+1.git branch --> it shows what are all branches present for this directory.
+
+2.git branch new-branch-name--->it will create a new branch for directory.(after that it still in main branch we need to switch branch by using its name).
+   git branch -b new-branch-name--->another way to create a branch and directly take you to that branch.(no need to switch).
+   git branch checkout -b new-branch-name
+Switch between a Branch
+-----------------------------
+3.git checkout branch-name----------->it will take you to that branch.
+
+4.(git checkout  -)-----> it will take you to previously checkedout branch. 
+5. when you are change something in branch and didn't add to staging  that time git will not allow you to switching (case happens in unstaged area)
+    STASH (recycle bin)
+    -----------------------------
+      git stash save "some message" ---> reallly want to switch then.
+      git stash list   ---> list out stash.
+      git stash show stash-name(stash@{0}) or  git stash show -p stash-name(stash@{0}) (detailed one)
+      git stash pop stash-name(stash@{0}) or git stash apply stash-name(stash@{0}) ----> retrieve last stash and put into branch
+      git stash drop stash-name(stash@{0}) --> delete stash by name
+     git stash clear ---> clear all stash
+    
+    commit or revoke back master   git checkout  -- filename
+Merge a branch :
+-----------------------
+5.git merge branch-name -------------->merges a one branch with other one(have to go master then hit command).Pointed to merge branch SHA-1 reference
+   git merge --no-ff branch-name ---> this will create separete commit (refer picture).N0 fast forward.
+   git merge --ff-only branch-name ---> do fast forward only if possible otherwise none.
+   CONFLICT :
+   ---------------------
+    git merge --abort
+To delete  a branch :
+-----------------------
+6.git branch -d branch-name--------------->to delete a branch from directory.
+
+Renaming a Branch:
+------------------
+7.git branch -m old-branch-name new-branch-name
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                      GIT IGNORE:
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+way 1 :
+    1. git clean -n ---> git willn't keep track (file still in folder)
+    2.git clean -f   ---> delete from folder
+way 2 :
+    1.  create and add .gitignore file in working directory
+    2.  .gitignore have to move in repo(git add .gitignore then git commit -m "")
+         inside file :
+            1. "#" use this for comment
+            2.   *.extention of file (like *.js,*.html ,etc) to avoid this kind file for staging
+            3.   you can put folder path directly like (node_modules/)
+            4.   !filename --> when you're using  (*.extention) then not to avoid  one file with   that extention 
+                         ex: to avoid all js file except one then use 
+                                        i) *.js (to avoid all js file)         ii)!filename.js (except this file)
+
+----> Once you committed a file, after that you add that file into gitignore then gitignore willn't listen and git keep track when modify
+  steps to revert back a file for above case
+            i) git rm --cached filename         ii) then add and commit gitignore
+
+-----> git never track a empty folder 
+                       trick-->  to keep track a empty folder ,you have to add a file called .git(name whatever you want) like .gitkeep or else(Not Git Doc)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                      GIT LISTING
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+command to list folder structure 
+ 1) git ls -tree
+further more
+       i)   git ls-tree SHA-1 or HEAD ~ 1 (1--> position of head you will go for) --> you can see folder structure of committed one
+      ii)   git ls-tree master  or HEAD
+2) git  log --graph --oneline --all --decorate
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                      TAG and TICKET
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+commits are refer to some SHA-1 code and its difficult to pick and use it..For instance ,want to go back particular commit then we have search commit message to
+finding out.To avoid this kind of stuation .We wil go for TAG and TICKET.
+we can refer some SHA-1 as some name by using tag.
+for example :
+git tag reference-name SHA-1code ---> git tag version_1 sd345fjffh
+or
+git tag -a reference-name -m "some message" SHA-1code  ----> git tag -a version_1 -m "this commit refers to version 1 of out project" sd345fjffh
+(referable to use)
+
+to list out tickets :
+  git tag --list ----> to list a tickets without message
+  git tag -l -n or -ln ----> with message
+
+to delete a tag : 
+ git tag -d tag-name
+      
+
+ 
+
+
+
+
+
+
+

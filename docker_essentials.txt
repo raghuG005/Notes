@@ -1,0 +1,38 @@
+<<<<<<<<<<-------------------  DOCKER ------------------------------>>>>>>>>>>>
+
+COMMANDS :-
+-------------------------
+1) docker ps
+             it will show currently running images
+2) docker ps -a or docker ps --all
+             it will show all available images in our local machine
+3) docker pull container-name(from repo)
+4) docker images --> it will show all available images
+5) docker system prune --> it will delete all containers
+
+------------------------- BUILD -------------------------------
+docker build .
+          it will create image based on Dockerfile in the currently directory(.)
+docker build -t  image-name(whatever):version(optional)    .
+
+--------------------------------RUN-----------------------------------
+ docker run -p hostname:exposeHostName container-name or image-name or image id
+      ex: docker run -p 3001:3000 ubuntu or 2f43563
+              it used to run a Container.
+       i) docker create container-name --> docker start container-name 
+                                                       or 
+            docker run container-name
+docker pause ,docker unpause,docker stop container-name or id 
+
+___________________
+Cache
+
+------Dockerfile.dev---------
+docker build -f Dockerfile.dev -t image-name
+
+
+
+  
+
+ 
+  
