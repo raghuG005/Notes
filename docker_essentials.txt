@@ -24,6 +24,8 @@ docker build -t  image-name(whatever):version(optional)    .
             docker run container-name
 docker pause ,docker unpause,docker stop container-name or id 
 
+
+docker run -it alpine /bin/sh  --> used to run cli mode
 ___________________
 Cache
 
@@ -32,7 +34,6 @@ docker build -f Dockerfile.dev -t image-name
 
 
 
-  
 
  
   
